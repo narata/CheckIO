@@ -10,9 +10,16 @@ def checkio(text):
             result[letter] = 1
         else:
             result[letter] += 1
-    
+    result = sorted(result.items(), key=lambda item:item[1], reverse=True)
+    letters = []
+    num = result[0][1]
+    for buf in result:
+        if buf[1] == num:
+            letters.append(buf[0])
+    print sorted(letters)[0]
+    return sorted(letters)[0]
     # replace this for solution
-    return 'a'
+    # return 'a'
 
 
 if __name__ == '__main__':
