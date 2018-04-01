@@ -1,42 +1,56 @@
 import collections
 
 
-def min(*args, **kwargs):
-    args = args[0] if len(args) == 1 else args
-    if not isinstance(args, collections.Iterable):
-        return args
-    args = [buf for buf in args]
-    key = kwargs.get("key", None)
-    if key is not None:
-        args_later = [key(buf) for buf in args]
-    else:
-        args_later = args
-    result = args[0]
-    result_later = args_later[0]
-    for i in range(1, len(args)):
-        if args_later[i] < result_later:
-            result = args[i]
-            result_later = args_later[i]
-    return result
+# def min(*args, **kwargs):
+#     args = args[0] if len(args) == 1 else args
+#     if not isinstance(args, collections.Iterable):
+#         return args
+#     args = [buf for buf in args]
+#     key = kwargs.get("key", None)
+#     if key is not None:
+#         args_later = [key(buf) for buf in args]
+#     else:
+#         args_later = args
+#     result = args[0]
+#     result_later = args_later[0]
+#     for i in range(1, len(args)):
+#         if args_later[i] < result_later:
+#             result = args[i]
+#             result_later = args_later[i]
+#     return result
+#
+#
+# def max(*args, **kwargs):
+#     args = args[0] if len(args) == 1 else args
+#     if not isinstance(args, collections.Iterable):
+#         return args
+#     args = [buf for buf in args]
+#     key = kwargs.get("key", None)
+#     if key is not None:
+#         args_later = [key(buf) for buf in args]
+#     else:
+#         args_later = args
+#     result = args[0]
+#     result_later = args_later[0]
+#     for i in range(1, len(args)):
+#         if args_later[i] > result_later:
+#             result = args[i]
+#             result_later = args_later[i]
+#     return result
 
 
-def max(*args, **kwargs):
-    args = args[0] if len(args) == 1 else args
-    if not isinstance(args, collections.Iterable):
-        return args
-    args = [buf for buf in args]
-    key = kwargs.get("key", None)
-    if key is not None:
-        args_later = [key(buf) for buf in args]
-    else:
-        args_later = args
-    result = args[0]
-    result_later = args_later[0]
-    for i in range(1, len(args)):
-        if args_later[i] > result_later:
-            result = args[i]
-            result_later = args_later[i]
-    return result
+from functools import reduce
+
+
+def abs_method(c):
+    def f(*args, key=lambda x: x):
+        if len(args) == 1: args = args[0]
+        return reduce(lambda a, b: b if c(a[1], b[1]) else a, map(lambda x: (x, key(x)), args))[0]
+    return f
+
+
+min = abs_method(lambda a, b: a > b)
+max = abs_method(lambda a, b: a < b)
 
 
 if __name__ == '__main__':
