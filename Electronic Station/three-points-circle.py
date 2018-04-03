@@ -22,7 +22,7 @@ def checkio(data):
     r = int(r) if r == int(r) else r
     return "(x-{})^2+(y-{})^2={}^2".format(x0, y0, r)
 
-#These "asserts" using only for self-checking and not necessary for auto-testing
+
 if __name__ == '__main__':
     print(checkio("(9,8),(9,4),(3,6)"))
     # assert checkio("(2,2),(6,2),(2,6)") == "(x-4)^2+(y-4)^2=2.83^2"
